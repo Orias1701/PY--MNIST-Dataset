@@ -2,7 +2,7 @@
 
 from lib.dataset import MNISTDataLoader
 from lib.model import MNISTClassifier
-from lib.reduction import DimensionalityReducer
+from lib.reduction import DimensionalityReducer, ChiSquareReducer
 from lib.utils import (
     plot_samples,
     plot_training_history,
@@ -18,6 +18,7 @@ __all__ = [
     "MNISTDataLoader",
     "MNISTClassifier",
     "DimensionalityReducer",
+    "ChiSquareReducer",
     "plot_samples",
     "plot_training_history",
     "plot_confusion_matrix",
