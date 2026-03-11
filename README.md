@@ -51,7 +51,7 @@ PY--MNIST-Dataset/
 - **MNISTDataLoader**: tải MNIST (package `mnist-datasets`), chuẩn hóa, flatten.
 - **MNISTClassifier**: phân loại (logistic / random forest).
 - **DimensionalityReducer**: giảm chiều bằng PCA (số chiều cố định hoặc % phương sai).
-- **ChiSquareReducer**: chọn đặc trưng Chi-Square (SelectKBest + chi2), fit(X, y).
+- **ChiSquareReducer**: chọn đặc trưng Chi-Square (SelectKBest + chi2); `n_components` là **int** (số đặc trưng) hoặc **float** (độ chính xác tối thiểu, tìm k nhỏ nhất đạt ngưỡng). fit(X, y) hoặc fit(X, y, X_val, y_val).
 - **Utils**: `plot_samples`, `plot_confusion_matrix`, `print_classification_report`, `measure_array_memory_mb`, `run_and_measure_seconds`, `plot_comparison_reduction`, `print_comparison_table`.
 
 ## Notebook
