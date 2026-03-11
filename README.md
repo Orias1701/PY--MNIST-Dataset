@@ -37,11 +37,16 @@ PY--MNIST-Dataset/
 │   ├── __init__.py
 │   ├── dataset.py          # MNISTDataLoader – tải & tiền xử lý
 │   ├── model.py            # MNISTClassifier – wrapper sklearn
-│   ├── reduction.py        # DimensionalityReducer – PCA
+│   ├── reduction/          # Giảm chiều (tách file, phân nhánh trong module)
+│   │   ├── __init__.py
+│   │   ├── pca.py          # DimensionalityReducer (PCA)
+│   │   ├── chi2.py         # ChiSquareReducer (Chi-Square)
+│   │   └── reducer.py     # create_reducer, UnifiedReducer – interface chung
 │   └── utils.py            # Vẽ, đo bộ nhớ/thời gian, so sánh
 ├── mnist_pipeline.ipynb    # Pipeline: tải → train → đánh giá
-├── mnist_dimensionality_reduction.ipynb  # Giảm chiều PCA & so sánh baseline
-├── mnist_dimensionality_reduction_chi2.ipynb  # Phiên bản song song: Chi-Square
+├── mnist_dimensionality_reduction.ipynb  # Notebook chung: biến METHOD (pca/chi2), không phân nhánh
+├── mnist_dimensionality_reduction_pca.ipynb   # Riêng PCA (tham khảo)
+├── mnist_dimensionality_reduction_chi2.ipynb  # Riêng Chi-Square (tham khảo)
 ├── requirements.txt
 └── README.md
 ```
@@ -50,8 +55,7 @@ PY--MNIST-Dataset/
 
 - **MNISTDataLoader**: tải MNIST (package `mnist-datasets`), chuẩn hóa, flatten.
 - **MNISTClassifier**: phân loại (logistic / random forest).
-- **DimensionalityReducer**: giảm chiều bằng PCA (số chiều cố định hoặc % phương sai).
-- **ChiSquareReducer**: chọn đặc trưng Chi-Square (SelectKBest + chi2); `n_components` là **int** (số đặc trưng) hoặc **float** (độ chính xác tối thiểu, tìm k nhỏ nhất đạt ngưỡng). fit(X, y) hoặc fit(X, y, X_val, y_val).
+- **lib.reduction** (package): **pca.py** (DimensionalityReducer), **chi2.py** (ChiSquareReducer), **reducer.py** (create_reducer, UnifiedReducer, get_default_n_components_trials). Phân nhánh phương pháp chỉ trong reducer; notebook gọi chung một API.
 - **Utils**: `plot_samples`, `plot_confusion_matrix`, `print_classification_report`, `measure_array_memory_mb`, `run_and_measure_seconds`, `plot_comparison_reduction`, `print_comparison_table`.
 
 ## Notebook
@@ -59,8 +63,9 @@ PY--MNIST-Dataset/
 | Notebook | Nội dung |
 |----------|----------|
 | **mnist_pipeline.ipynb** | Tải MNIST, xem mẫu, train classifier, báo cáo phân lớp và confusion matrix. |
-| **mnist_dimensionality_reduction.ipynb** | Baseline (784 chiều) vs sau PCA; so sánh bộ nhớ, thời gian fit/predict, độ chính xác và hao hụt. |
-| **mnist_dimensionality_reduction_chi2.ipynb** | Phiên bản song song dùng Chi-Square (SelectKBest); cùng cấu trúc so sánh baseline vs sau giảm chiều. |
+| **mnist_dimensionality_reduction.ipynb** | **Notebook chung:** đặt `METHOD = "pca"` hoặc `"chi2"`, gọi `create_reducer(METHOD, ...)`; không phân nhánh, so sánh baseline vs sau giảm chiều. |
+| **mnist_dimensionality_reduction_pca.ipynb** | Riêng PCA (tham khảo). |
+| **mnist_dimensionality_reduction_chi2.ipynb** | Riêng Chi-Square (tham khảo). |
 
 Chạy notebook: mở file trong Jupyter/Cursor, chọn kernel trỏ tới `.venv\\Scripts\\python.exe` (hoặc Python 3.x ('.venv')).
 
